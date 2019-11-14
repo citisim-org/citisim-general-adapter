@@ -1,0 +1,127 @@
+Publish an report based on the sent information
+---
+definitions:
+  Report:
+    properties:
+      userId:
+        type: string
+        description: The userId of the report
+      photoDescription:
+        type: string
+        description: The photoDescription of the report
+      date:
+        type: integer
+        description: The date of the report
+      id:
+        type: string
+        description: The id of the report
+      latitude:
+        type: number
+        description: The latitude of the report
+      longitude:
+        type: number
+        description: The longitude of the report
+      altitude:
+        type: number
+        description: The altitude of the report
+      photoPath:
+        type: string
+        description: The photo's path of the report
+      status:
+        type: string
+        description: The status category of the report
+      title:
+        type: string
+        description: The title category of the report
+      category:
+        type: string
+        description: The category of the report
+    required:
+      - userId
+      - photoDescription
+      - date
+      - id
+      - latitude
+      - longitude
+      - altitude
+      - photoPath
+      - status
+      - title
+      - category
+    type: object
+    example:
+      userId: admin
+      photoDescription: a fire truck,a car parked on the side of the road,the truck is white,tree with no leaves
+      date: 1556873091
+      id: AWoHt4zGTdJytDXs-OEr
+      latitude: 38.997147
+      longitude: -3.918799
+      altitude: 735
+      photoPath: http://image.server.com/picture12352
+      status: REPORT_CREATED
+      title: Coche incendiado
+      category: Incidencia
+parameters:
+  - name: report
+    in: body
+    required: true
+    description: The report to publish
+    schema:
+      $ref: '#/definitions/Report'
+responses:
+  200:
+    description: The report was successfully published
+    schema:
+      type: object
+      properties:
+        details:
+          $ref: '#/definitions/Report'
+        message: 
+          type: string
+      example:
+        details: 
+          userId: admin
+          photoDescription: a fire truck,a car parked on the side of the road,the truck is white,tree with no leaves
+          date: 1556873091
+          id: AWoHt4zGTdJytDXs-OEr
+          latitude: 38.997147
+          longitude: -3.918799
+          altitude: 735
+          photoPath: http://image.server.com/picture12352
+          status: REPORT_CREATED
+          title: Coche incendiado
+          category: Incidencia
+        message: Report created successfully
+  400:
+    description: The report was invalid
+    schema:
+      type: object
+      properties: 
+        details:
+          type: object
+          properties:
+            fieldname...:
+              type: array
+              items:
+                type: string
+        message: 
+          type: string
+      example:
+        details: 
+          id: [Missing data for required field.]
+          longitude: [Not a valid number.]
+        message: Invalid report received
+  500:
+    description: The report was not successfully published
+    schema:
+      type: object
+      properties: 
+        details:
+          type: string
+        message: 
+          type: string
+      example:
+        details: "Cannot login on auth server"
+        message: Could not publish report
+tags:
+  - report
