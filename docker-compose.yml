@@ -1,0 +1,21 @@
+server:
+  env_file: .env
+  build: .
+  working_dir: /mnt
+  volumes:
+    - .:/mnt
+  ports:
+    - '4000:4000'
+  command: python src/server.py
+
+testserver:
+  env_file: .env
+  build: .
+  working_dir: /mnt
+  volumes:
+    - .:/mnt
+  ports:
+    - '5053:5053'
+  environment:
+    APPLICATION_PORT: 5053
+  command: python -m pytest test/
